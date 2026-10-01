@@ -354,8 +354,8 @@ async def process_product_photo(message: types.Message, state: FSMContext):
     
     try:
         file_obj = await message.bot.get_file(photo_file_id)
-        await message.bot.download_file(file_obj.file_path, local_file_path)
-        img_url = f"https://aishamebel-production.up.railway.app/uploads/products/{filename}"
+        await asyncio.wait_for(message.bot.download_file(file_obj.file_path, local_file_path), timeout=20.0)
+        img_url = f"{settings.PUBLIC_URL}/uploads/products/{filename}"
     except Exception as e:
         file_obj = await message.bot.get_file(photo_file_id)
         img_url = f"https://api.telegram.org/file/bot{settings.BOT_TOKEN}/{file_obj.file_path}"
@@ -368,6 +368,7 @@ async def process_product_photo(message: types.Message, state: FSMContext):
             name=data["name"],
             description=data["desc"],
             price=data["price"],
+            stock_quantity=10,
             is_active=True
         )
         session.add(new_prod)
@@ -468,8 +469,8 @@ async def process_edit_product_video_file(message: types.Message, state: FSMCont
     
     try:
         file_obj = await message.bot.get_file(video_file_id)
-        await message.bot.download_file(file_obj.file_path, local_file_path)
-        video_url = f"https://aishamebel-production.up.railway.app/uploads/videos/{filename}"
+        await asyncio.wait_for(message.bot.download_file(file_obj.file_path, local_file_path), timeout=20.0)
+        video_url = f"{settings.PUBLIC_URL}/uploads/videos/{filename}"
     except Exception as e:
         file_obj = await message.bot.get_file(video_file_id)
         video_url = f"https://api.telegram.org/file/bot{settings.BOT_TOKEN}/{file_obj.file_path}"
@@ -590,8 +591,8 @@ async def process_edit_product_photo(message: types.Message, state: FSMContext):
     local_file_path = os.path.join("uploads/products", filename)
     try:
         file_obj = await message.bot.get_file(photo_file_id)
-        await message.bot.download_file(file_obj.file_path, local_file_path)
-        img_url = f"https://aishamebel-production.up.railway.app/uploads/products/{filename}"
+        await asyncio.wait_for(message.bot.download_file(file_obj.file_path, local_file_path), timeout=20.0)
+        img_url = f"{settings.PUBLIC_URL}/uploads/products/{filename}"
     except Exception as e:
         file_obj = await message.bot.get_file(photo_file_id)
         img_url = f"https://api.telegram.org/file/bot{settings.BOT_TOKEN}/{file_obj.file_path}"

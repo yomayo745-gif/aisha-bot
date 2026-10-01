@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://aishamebel-production.up.railway.app/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://aisha-mebel-production.up.railway.app/api',
 });
 
 // Assuming we use Telegram Web App Init Data for authentication

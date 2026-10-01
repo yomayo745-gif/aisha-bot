@@ -25,7 +25,8 @@ async def upload_order_photo(file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         content = await file.read()
         buffer.write(content)
-    base_url = "https://aishamebel-production.up.railway.app"
+    from app.core.config import settings
+    base_url = settings.PUBLIC_URL
     return {"image_url": f"{base_url}/uploads/orders/{filename}"}
 
 @router.post("/custom")

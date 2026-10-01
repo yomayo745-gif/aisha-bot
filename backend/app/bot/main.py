@@ -35,6 +35,10 @@ async def start_bot():
         except Exception as e:
             logger.error(f"Failed to update chat menu button: {e}")
             
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+    except Exception as e:
+        logger.warning(f"delete_webhook error: {e}")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

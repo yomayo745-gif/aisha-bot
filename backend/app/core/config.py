@@ -26,8 +26,9 @@ class Settings(BaseSettings):
     COMPANY_PHONE_1: str = "880606040"
     COMPANY_PHONE_2: str = "934124604"
     
+    PUBLIC_URL: str = "https://aisha-mebel-production.up.railway.app"
     APP_URL: Optional[str] = "https://admin.aisha-mebel.uz"
-    WEB_APP_URL: Optional[str] = "https://frontend-production-1bdd.up.railway.app"
+    WEB_APP_URL: Optional[str] = "https://frontend-production-7834.up.railway.app"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
