@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
 
 class Settings(BaseSettings):
-    BOT_TOKEN: str = "8973551990:AAFQgayifyPx7RSQhnnOXjBkWDb-t8gADk8"
+    BOT_TOKEN: str = "8973551990:AAEYHNwhRcsCGBfhi-jYomzoCbxusZe5zRg"
     DATABASE_URL: str = "sqlite+aiosqlite:///./aisha_mebel.db"
     REDIS_URL: str = "redis://localhost:6379/0"
     
