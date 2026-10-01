@@ -335,12 +335,16 @@ async def process_product_desc(message: types.Message, state: FSMContext):
 
 @router.message(AddProduct.waiting_for_price)
 async def process_product_price(message: types.Message, state: FSMContext):
-    if not message.text.isdigit():
-        await message.answer("Faqat raqam kiriting!")
+    if not message.text:
+        await message.answer("Iltimos, narxni matn yoki raqam ko'rinishida yuboring!")
         return
-    await state.update_data(price=int(message.text))
+    clean_text = message.text.replace(" ", "").replace("'", "").replace(",", "").replace(".", "").strip()
+    if not clean_text.isdigit():
+        await message.answer("⚠️ Iltimos, narxni faqat raqamlarda kiriting! (masalan: 500000 yoki 1000000)")
+        return
+    await state.update_data(price=int(clean_text))
     await state.set_state(AddProduct.waiting_for_photo)
-    await message.answer("Mahsulot rasmini yuboring:", reply_markup=get_cancel_admin_keyboard())
+    await message.answer("📸 Endi mahsulot rasmini yuboring (galereyangizdan photo qilib):", reply_markup=get_cancel_admin_keyboard())
 
 @router.message(AddProduct.waiting_for_photo, F.photo)
 async def process_product_photo(message: types.Message, state: FSMContext):
