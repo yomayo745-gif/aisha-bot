@@ -29,6 +29,14 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.info("Column video_url already exists or migration skipped.")
 
+    try:
+        async with AsyncSessionLocal() as session:
+            await session.execute(text("UPDATE product_images SET image_url = REPLACE(image_url, 'aishamebel-production.up.railway.app', 'aisha-mebel-production.up.railway.app');"))
+            await session.commit()
+            logger.info("Successfully updated product_images domain references.")
+    except Exception as e:
+        logger.info(f"Product image domain migration error/skipped: {e}")
+
     bot_task = asyncio.create_task(start_bot())
     yield
     bot_task.cancel()

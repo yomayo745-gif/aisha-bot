@@ -42,17 +42,20 @@ async def notify_admin_new_order(order: Order, items_text: str, customer_telegra
         text += f"📝 <b>Izoh:</b> {order.customer_note}\n"
 
     import os
-    from aiogram.types import FSInputFile
+    from aiogram.types import FSInputFile, URLInputFile
 
     photo_to_send = None
     if image_url:
+        image_url = image_url.replace("aishamebel-production.up.railway.app", "aisha-mebel-production.up.railway.app")
         if "/uploads/" in image_url:
             local_rel = image_url.split("/uploads/")[1]
             local_path = os.path.join("uploads", local_rel)
             if os.path.exists(local_path):
                 photo_to_send = FSInputFile(local_path)
             else:
-                photo_to_send = image_url
+                photo_to_send = URLInputFile(image_url)
+        elif image_url.startswith("http://") or image_url.startswith("https://"):
+            photo_to_send = URLInputFile(image_url)
         else:
             photo_to_send = image_url
 
@@ -127,13 +130,17 @@ async def notify_admin_individual_order(
     photo_to_send = None
     if reference_image_url:
         import os
+        from aiogram.types import URLInputFile
+        reference_image_url = reference_image_url.replace("aishamebel-production.up.railway.app", "aisha-mebel-production.up.railway.app")
         if "/uploads/" in reference_image_url:
             local_rel = reference_image_url.split("/uploads/")[1]
             local_path = os.path.join("uploads", local_rel)
             if os.path.exists(local_path):
                 photo_to_send = FSInputFile(local_path)
             else:
-                photo_to_send = reference_image_url
+                photo_to_send = URLInputFile(reference_image_url)
+        elif reference_image_url.startswith("http://") or reference_image_url.startswith("https://"):
+            photo_to_send = URLInputFile(reference_image_url)
         else:
             photo_to_send = reference_image_url
         
